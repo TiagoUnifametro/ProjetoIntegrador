@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+	<link rel="stylesheet" href="styleJ.css"/>
+	<h1>Login</h1>
+	<title>Login</title>
+</h:head>	
+
+<h:body>
+
+	<h:form>
+		
+		<h5>Login:</h5>
+    	<p:inputText required="true"/>
+		
+		<h5>Senha:</h5>
+	    <p:password id="toggle" value="#{passwordView.password6}" toggleMask="true" redisplay="true" required="true"/>		
+		<br/>
+		<br/>
+		<p:commandButton type="button" value="Entrar" styleClass="ui-button-outlined ui-button-success" />
+	</h:form>
+
+</h:body>	
+</html>
