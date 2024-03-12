@@ -36,27 +36,22 @@ public class CadastroBean {
 		String ativo;
 		cadastro.setAtivo(true);
 		if(cadastro.isAtivo()) {
-			ativo = "ATIVOaa";
+			ativo = "ATIVO";
 		}else {
-			ativo = "INATIVOaa";
+			ativo = "INATIVO";
 		}
 		return ativo;
 	}
-	
+
 	public String dataAtual(){
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = new Date();
-		//return formato.format(date);
-		return null;
+		return formato.format(date);
 	}
-	
+
 	public void salvar() {
-		System.out.println("To entrando1");
 		CadastroDao cDao = new CadastroDao();
-		System.out.println("To entrando2");
 		cDao.salvar(cadastro);
-		System.out.println("To entrando3");
 		//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dados salvos com sucesso!!!", "Sucesso"));
-	}
-	
+	}	
 }
