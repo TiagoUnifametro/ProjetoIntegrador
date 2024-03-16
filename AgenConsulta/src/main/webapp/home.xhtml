@@ -14,30 +14,30 @@
 </h:head>
 <h:body>
 	<div>
-		<h:form>
+		<p:panel header="Dados do Usuário">
+			<h:form>
+				
+				<h5 >Nome:</h5>
+	    		<p:outputLabel value="#{consultaBean.cadastro.nome}" />
 			
-			<h5 >Nome:</h5>
-    		<p:inputText required="true"/>
+				<h5>Apelido:</h5>
+					<p:outputLabel value="#{consultaBean.cadastro.apelido}" />
+		   			
+				<h5>Data Nascimento:</h5>
+				<p:outputLabel value="#{consultaBean.cadastro.dataNascimento}" />
+				
+				<h5>Status Usuário:</h5>
+				<p:outputLabel value="#{consultaBean.cadastro.ativo}" />
+				
+				<h5>Data de Cadastro:</h5>
+				<p:outputLabel value="#{consultaBean.cadastro.dataCadastro}" />
+				
+			</h:form>
+			
+			<p:linkButton outcome="login.xhtml" value="Voltar" styleClass="ui-button-outlined ui-button-success"/>
 		
-			<h5>Apelido:</h5>
-	    	<span class="ui-float-label">
-				<p:inputText id="float-input" value="#{inputTextView.text}" required="true"/>
-				<p:outputLabel for="@previous" value="Apelido" />
-	   		</span>		
-	   			
-	   		<h5>Senha:</h5>
-	        <p:password id="toggle" value="#{passwordView.password6}" toggleMask="true" redisplay="true" required="true"/>
-			
-			<h5>Data Nascimento:</h5>
-			<p:datePicker id="date" showIcon="true" style="width:auto" required="true"/>
-			
-			<h5>Status Usuário:</h5>
-    		<p:inputText value="Ativo" disabled="true"/>
-			
-			<h5>Data de Cadastro:</h5>
-			<p:datePicker id="dateC" showIcon="true" style="width:auto" />
-			
-		</h:form>		
+			<p:linkButton outcome="editar.xhtml" value="Editar" styleClass="ui-button-outlined ui-button-success"/>
+		</p:panel>		
 	</div>
 </h:body>
 </html>

@@ -17,14 +17,26 @@
 		<h:form>
 		
 			<h5>Login:</h5>
-	    	<p:inputText required="true"/>
+	    	<p:inputText required="true" value="#{consultaBean.cadastro.apelido}"/>
 	
 			<h5>Data Nascimento:</h5>
-			<p:datePicker id="date" showIcon="true" style="width:auto" required="true"/>
+			<p:datePicker id="date" showIcon="true" style="width:auto" required="true" value="#{consultaBean.cadastro.dataNascimento}"/>
+
+			<h5>Nova Senha:</h5>
+	    	<p:inputText required="true" value="#{consultaBean.cadastro.senha}"/>
 			<br/>
 			<br/>
-			<p:commandButton type="button" value="Salvar" styleClass="ui-button-outlined ui-button-success" />		
+			<p:commandButton type="submit" value="Salvar" styleClass="ui-button-outlined ui-button-success" action="#{consultaBean.trocarSenha()}"/>		
+			
+			
 		</h:form>		
+		
+		<h:form>
+			<p:messages id="detalhe" showDetail="true" closable="true" styleClass=".labels">
+	          			<p:autoUpdate/>
+	        </p:messages>
+		</h:form>
+		
 	</div>
 </h:body>
 

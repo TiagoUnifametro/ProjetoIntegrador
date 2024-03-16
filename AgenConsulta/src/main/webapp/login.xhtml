@@ -25,7 +25,15 @@
 		<br/>
 		<br/>
 		<p:commandButton type="submit" value="Entrar" styleClass="ui-button-outlined ui-button-success" action="#{consultaBean.logar()}"/>
+		<p:linkButton outcome="recupera.xhtml" value="Recuperar Senha" styleClass="ui-button-outlined ui-button-success"/>
+		<p:linkButton outcome="cadastro.xhtml" value="Cadastre-se" styleClass="ui-button-outlined ui-button-success"/>
+		
 	</h:form>
-
+	
+	<h:form>
+		<p:messages id="detalhe" showDetail="true" closable="true" styleClass=".labels">
+          			<p:autoUpdate/>
+        </p:messages>
+	</h:form>
 </h:body>	
 </html>
