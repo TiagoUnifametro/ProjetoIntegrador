@@ -1,20 +1,9 @@
 package bean;
 
-import java.sql.SQLData;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
-
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.context.FacesContext;
-
-import org.primefaces.event.DateViewChangeEvent;
-
 import dao.CadastroDao;
 import entidades.Cadastro;
 
@@ -46,6 +35,7 @@ public class CadastroBean {
 	public String dataAtual(){
 		SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = new Date();
+		
 		return formato.format(date);
 	}
 
