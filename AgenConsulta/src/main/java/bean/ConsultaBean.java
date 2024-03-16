@@ -3,6 +3,7 @@ package bean;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -12,7 +13,7 @@ import entidades.Cadastro;
 
 @ManagedBean
 @ApplicationScoped
-public class CadastroBean {
+public class ConsultaBean {
 
 	private Cadastro cadastro = new Cadastro();
 
@@ -24,6 +25,8 @@ public class CadastroBean {
 		this.cadastro = cadastro;
 	}
 
+//Cadastro Início	
+	
 	public String ativo() {
 		String ativo;
 		cadastro.setAtivo(true);
@@ -44,10 +47,41 @@ public class CadastroBean {
 		return sdf.format(date);
 	}
 
-	public void salvar() {
+	public String salvar() {
 		CadastroDao cDao = new CadastroDao();
 		cDao.salvar(cadastro);
 		//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dados salvos com sucesso!!!", "Sucesso"));
 		Cadastro cadastro = new Cadastro();
+		return "login.xhtml";
 	}
+//Cadastro Fim
+
+//Login Início
+	public String logar(){
+		CadastroDao cDao = new CadastroDao();
+		List<Cadastro> lista = cDao.pesquisaTodos();
+		
+		for(Cadastro cadastroc : lista) {
+			System.out.println(cadastroc.getApelido() + " - " + cadastroc.getSenha());
+			
+			if(cadastro.getApelido().equals(cadastroc.getApelido()) && cadastro.getSenha().equals(cadastroc.getSenha())) {
+				System.out.println("Usuario liberado");
+				return "home.xhtml";
+			}else {
+				System.out.println("Usuario não liberado");
+			}
+		}
+		
+//		for (int t = 1; t <= cDao.pesquisaTodos().size(); t++) {
+//		
+//			System.out.println(cDao.pesquisaTodos());
+//		
+//		}
+		return null;
+	}
+	
+	
+	
+	
+	
 }

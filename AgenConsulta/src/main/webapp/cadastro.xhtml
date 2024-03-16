@@ -7,42 +7,45 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 <!-- id, login, senha, nome, ativo, dataNascimento e dataCadastro -->
-<h:head>
-	<link rel="stylesheet" href="styleJ.css"/>
-	<h1>Cadastro Usuário</h1>
-	<title>Cadastro</title>
-</h:head>
-<h:body>
-	<div>
-		<!--  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 Senha para exportar-->
-		<h:form>
-			
-				<h5>Nome:</h5>
-    			<p:inputText value="#{cadastroBean.cadastro.nome}" required="true"/>
+	<h:head>
+		<link rel="stylesheet" href="styleJ.css"/>
+		<h1>Cadastro Usuário</h1>
+		<title>Cadastro</title>
+	</h:head>
+	<h:body>
+		<div>
+		<p:panel header=" Novo Cadastro " >
+			<!--  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 Senha para exportar-->
+			<h:form>
 				
+				<h5>Nome:</h5>
+	   			<p:inputText value="#{consultaBean.cadastro.nome}" required="true"/>
+			
 				<h5>Apelido:</h5>
-		       	<p:inputText value="#{cadastroBean.cadastro.apelido}" required="true"/>
-		       	
-		       	
-	   			<h5>Senha:</h5>
-	        	<p:password id="toggle" value="#{cadastroBean.cadastro.senha}" toggleMask="true" redisplay="true" required="true"/>
+		      	<p:inputText value="#{consultaBean.cadastro.apelido}" required="true"/>
+			      	
+			      	
+		   		<h5>Senha:</h5>
+		        <p:password id="toggle" value="#{consultaBean.cadastro.senha}" toggleMask="true" redisplay="true" required="true"/>
 				
 				<h5>Data Nascimento:</h5>
-				<p:datePicker id="date" showIcon="true" value="#{cadastroBean.cadastro.dataNascimento}" style="width:auto" required="true"/>
+				<p:datePicker id="date" showIcon="true" value="#{consultaBean.cadastro.dataNascimento}" style="width:auto" required="true"/>
 				
 				<h5>Status Usuário:</h5>
 				
-    			<p:inputText value="#{cadastroBean.ativo()}" disabled="true" />
+	    		<p:inputText value="#{consultaBean.ativo()}" disabled="true" />
 				<h5>Data de Cadastro:</h5>
-				<p:inputText value="#{cadastroBean.dataAtual()}" disabled="true" />
+				<p:inputText value="#{consultaBean.dataAtual()}" disabled="true" />
 				<br/> 
 				<br/>	
-		
-		</h:form>		
-	
-				<p:commandButton type="submit" value="Salvar" styleClass="ui-button-outlined ui-button-success" action="#{cadastroBean.salvar()}"/>
+			
+			</h:form>		
+		 	
+				<p:commandButton type="submit" value="Salvar" styleClass="ui-button-outlined ui-button-success" action="#{consultaBean.salvar()}"/>
+				<p:linkButton outcome="login.xhtml" value="Login" styleClass="ui-button-outlined ui-button-success"/>
 				
-	</div>
-</h:body>
-
+			</p:panel>
+		</div>
+		
+	</h:body>
 </html>

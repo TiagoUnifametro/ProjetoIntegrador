@@ -18,13 +18,13 @@
 	<h:form>
 		
 		<h5>Login:</h5>
-    	<p:inputText required="true"/>
+    	<p:inputText required="true" value="#{consultaBean.cadastro.apelido}"/>
 		
 		<h5>Senha:</h5>
-	    <p:password id="toggle" value="#{passwordView.password6}" toggleMask="true" redisplay="true" required="true"/>		
+	    <p:password id="toggle" value="#{consultaBean.cadastro.senha}" toggleMask="true" redisplay="true" required="true"/>		
 		<br/>
 		<br/>
-		<p:commandButton type="button" value="Entrar" styleClass="ui-button-outlined ui-button-success" />
+		<p:commandButton type="submit" value="Entrar" styleClass="ui-button-outlined ui-button-success" action="#{consultaBean.logar()}"/>
 	</h:form>
 
 </h:body>	
