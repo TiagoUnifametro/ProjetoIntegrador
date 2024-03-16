@@ -3,18 +3,44 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-<ui:composition template="">
-	<ui:define name="header">
-	    Add your header here or delete to use the default
-	</ui:define>
-	<ui:define name="content">
-	    Add your content here or delete to use the default
-	</ui:define>
-	<ui:define name="footer">
-	    Add your footer here or delete to use the default
-	</ui:define>
-</ui:composition>
+	<h:head>
+		<h1>Editar Informações de Usuário</h1>
+		<title>Editar Dados</title>
+	</h:head>
+	
+	
+	<h:body>
+		<h:form>
+		
+			<h5>Nome:</h5>
+			<p:inputText id="float-input" value="#{consultaBean.cadastro.nome}"/>
+			
+			
+			<h5>Apelido:</h5>
+	 		<p:inputText value="#{consultaBean.cadastro.apelido}" />
+				
+			<h5>Data Nascimento:</h5>
+			<p:datePicker id="date" showIcon="true" value="#{consultaBean.cadastro.dataNascimento}" style="width:auto" required="true"/>
+							
+			<h5>Senha:</h5>
+			<p:password value="#{consultaBean.cadastro.senha}" toggleMask="true" redisplay="true" required="true"/>
+				
+			<h5>Status Usuário:</h5>
+			<p:outputLabel value="#{consultaBean.cadastro.ativo}" />
+					
+			<h5>Data de Cadastro:</h5>
+			<p:outputLabel value="#{consultaBean.cadastro.dataCadastro}" />
+		
+		</h:form>
+		
+		<p:commandButton type="submit" value="Salvar" styleClass="ui-button-outlined ui-button-success" action="#{consultaBean.editar()}"/>
+		<p:linkButton outcome="home.xhtml" value="Voltar" styleClass="ui-button-outlined ui-button-success"/>
+		
+	</h:body>
+
+
 </html>

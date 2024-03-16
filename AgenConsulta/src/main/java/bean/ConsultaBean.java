@@ -27,8 +27,8 @@ public class ConsultaBean {
 		this.cadastro = cadastro;
 	}
 
-//Cadastro Início	
 	
+//Cadastro - Início		
 	public String ativo() {
 		String ativo;
 		cadastro.setAtivo(true);
@@ -49,60 +49,72 @@ public class ConsultaBean {
 		return sdf.format(date);
 	}
 
-	public String salvar() {
+	public String salvar() throws ParseException {
 		CadastroDao cDao = new CadastroDao();
 		cDao.salvar(cadastro);
 		//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dados salvos com sucesso!!!", "Sucesso"));
-		Cadastro cadastro = new Cadastro();
+		cadastro = new Cadastro();
 		return "login.xhtml";
 	}
-//Cadastro Fim
+//Cadastro - Fim
 
-//Login Início
+	
+//Login - Início
 	public String logar(){
 		CadastroDao cDao = new CadastroDao(); //Cria o objeto Dao para pesquisar os dados no banco
 		List<Cadastro> lista = cDao.pesquisaTodos(); // Retorna uma lista dos usuarios armazenados no banco
 		
 		for(Cadastro cadastroc : lista) { // loop para pesquisar dentro da lista cadastro se há o usuario digitado na tela de login
-			System.out.println(cadastroc.getApelido() + " - " + cadastroc.getSenha());
 			
 			if(cadastro.getApelido().equals(cadastroc.getApelido()) && cadastro.getSenha().equals(cadastroc.getSenha())) {
-				System.out.println("Usuario liberado");
+				//System.out.println("Usuario liberado");
 				cadastro = cadastroc;
 				return "home.xhtml"; //se o usuario digitado e senha estiverem cadastrada no banco então ele valida e retorna a tela do home
-			}else {
-				System.out.println("Usuario não liberado");
 			}
+		
 		}
 
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error:", "Apelido ou Senha inválidos, favor tentar novamente ou cadastre-se!"));
-		
+		cadastro = new Cadastro();
 		return null;
 	}
-//Login Fim
+//Login - Fim
 	
-//Trocar Senha Início
+
+//Trocar Senha - Início
 	public String trocarSenha(){
 		CadastroDao cDao = new CadastroDao(); //Cria o objeto Dao para pesquisar os dados no banco
 		List<Cadastro> lista = cDao.pesquisaTodos(); // Retorna uma lista dos usuarios armazenados no banco
 		
 		for(Cadastro cadastroc : lista) { // loop para pesquisar dentro da lista cadastro se há o usuario digitado na tela de login
-			System.out.println(cadastroc.getApelido() + " - " + cadastroc.getSenha());
+			//System.out.println(cadastroc.getApelido() + " - " + cadastroc.getSenha());
 			
 			if(cadastro.getApelido().equals(cadastroc.getApelido()) && cadastro.getDataNascimento().equals(cadastroc.getDataNascimento())) {
-				System.out.println("Usuario liberado");
+				//System.out.println("Usuario liberado");
 				cadastroc.setSenha(cadastro.getSenha());
 				CadastroDao cDaoE = new CadastroDao();
 				cDaoE.editar(cadastroc);
 				Cadastro c = new Cadastro();
 				return "login";
-			}else {
-				System.out.println("Usuario não liberado");
-			}
+			}//else {
+				//System.out.println("Usuario não liberado");
+			//}
 		}
 
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error:", "Apelido ou Data de Nascimento inválidos, favor tentar novamente ou cadastre-se!"));
 		
 		return null;
 	}
+//Trocar Senha - Fim
+
+
+//Editar Perfil - Início
+	public String editar() {
+		CadastroDao cDao = new CadastroDao();
+		cDao.editar(cadastro);
+		return "home.xhtml";
+	}
+	
+	
+
 }
