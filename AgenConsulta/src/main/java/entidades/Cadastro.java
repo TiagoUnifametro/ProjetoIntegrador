@@ -22,7 +22,7 @@ public class Cadastro {
 	private Date dataCadastro;
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -65,5 +65,5 @@ public class Cadastro {
 	public void setDataCadastro(Date dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
-	
+
 }

@@ -26,7 +26,7 @@ public class CadastroDao {
 		em.getTransaction().commit();
 		em.close();
 	}
-	
+
 	public static List<Cadastro> pesquisaTodos() {
 		EntityManager em = JPAUtil.criarEntityManager();
 		Query q = em.createQuery("select c from Cadastro c");
@@ -34,7 +34,7 @@ public class CadastroDao {
 		em.close();
 		return lista;
 	}
-	
+
 	public static void editar(Cadastro c) {
 		EntityManager em = JPAUtil.criarEntityManager();
 		em.getTransaction().begin();
@@ -42,7 +42,7 @@ public class CadastroDao {
 		em.getTransaction().commit();
 		em.close();
 	}
-	
-	
-	
+
+
+
 }
