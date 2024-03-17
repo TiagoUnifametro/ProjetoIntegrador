@@ -23,7 +23,7 @@
 			<p:datePicker id="date" showIcon="true" style="width:auto" required="true" value="#{consultaBean.cadastro.dataNascimento}"/>
 
 			<h5>Nova Senha:</h5>
-	    	<p:inputText required="true" value="#{consultaBean.cadastro.senha}"/>
+	    	<p:password id="toggle" value="#{consultaBean.cadastro.senha}" toggleMask="true" redisplay="true" required="true"/>
 			<br/>
 			<br/>
 			<p:commandButton type="submit" value="Salvar" styleClass="ui-button-outlined ui-button-success" action="#{consultaBean.trocarSenha()}"/>		

@@ -17,7 +17,7 @@ import entidades.Cadastro;
 @ApplicationScoped
 public class ConsultaBean {
 
-	private Cadastro cadastro = new Cadastro();
+	private Cadastro cadastro = new Cadastro(); //Instancio objeto Cadastro
 
 	public	Cadastro getCadastro() {
 		return cadastro;
@@ -29,7 +29,7 @@ public class ConsultaBean {
 
 	
 //Cadastro - Início		
-	public String ativo() {
+	public String ativo() { //Retorna na tela de cadastro o status que o usuário vai ficar
 		String ativo;
 		cadastro.setAtivo(true);
 		if(cadastro.isAtivo()) {
@@ -40,7 +40,7 @@ public class ConsultaBean {
 		return ativo;
 	}
 
-	public String dataAtual() throws ParseException{
+	public String dataAtual() throws ParseException{ //Retorna na tela de cadastro a data atual de cadastro
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  // Especifica o formato da data
 		Date date = new Date(); // Puxa Data atual do sistema
 		String dataString = sdf.format(date); // Coloca a data atual em uma String
@@ -49,10 +49,19 @@ public class ConsultaBean {
 		return sdf.format(date);
 	}
 
-	public String salvar() throws ParseException {
-		CadastroDao cDao = new CadastroDao();
-		cDao.salvar(cadastro);
-		//FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Dados salvos com sucesso!!!", "Sucesso"));
+	public String salvar() throws ParseException { //Metodo para validação do apelido e salvar o usuario no banco
+			CadastroDao cDao = new CadastroDao(); //Cria o objeto Dao para pesquisar os dados no banco e salvar
+			List<Cadastro> lista = cDao.pesquisaTodos(); // Retorna uma lista dos usuarios armazenados no banco
+			
+			for(Cadastro cadastroc : lista) { // loop para pesquisar dentro da lista cadastro se o apelido está em uso
+				if(cadastro.getApelido().equals(cadastroc.getApelido())) {
+					//System.out.println("Usuario liberado");
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario não cadastrado:", "Apelido já está em uso, favor tentar novamente!"));
+					return null; // caso apelido esteja em uso ele sai do metódo e retorna o erro de cadastro
+				}
+			}
+
+		cDao.salvar(cadastro);// salva o usuario no banco de dados
 		cadastro = new Cadastro();
 		return "login.xhtml";
 	}
@@ -65,15 +74,14 @@ public class ConsultaBean {
 		List<Cadastro> lista = cDao.pesquisaTodos(); // Retorna uma lista dos usuarios armazenados no banco
 		
 		for(Cadastro cadastroc : lista) { // loop para pesquisar dentro da lista cadastro se há o usuario digitado na tela de login
-			
 			if(cadastro.getApelido().equals(cadastroc.getApelido()) && cadastro.getSenha().equals(cadastroc.getSenha())) {
 				//System.out.println("Usuario liberado");
 				cadastro = cadastroc;
-				return "home.xhtml"; //se o usuario digitado e senha estiverem cadastrada no banco então ele valida e retorna a tela do home
+				return "home.xhtml"; //se o usuario digitado e senha estiverem cadastrada no banco então ele valida e retorna a tela de home
 			}
 		
 		}
-
+		
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error:", "Apelido ou Senha inválidos, favor tentar novamente ou cadastre-se!"));
 		cadastro = new Cadastro();
 		return null;
@@ -91,9 +99,9 @@ public class ConsultaBean {
 			
 			if(cadastro.getApelido().equals(cadastroc.getApelido()) && cadastro.getDataNascimento().equals(cadastroc.getDataNascimento())) {
 				//System.out.println("Usuario liberado");
-				cadastroc.setSenha(cadastro.getSenha());
+				cadastroc.setSenha(cadastro.getSenha()); // seta no objeto retornado do banco a senha nova do usuário
 				CadastroDao cDaoE = new CadastroDao();
-				cDaoE.editar(cadastroc);
+				cDaoE.editar(cadastroc); // adiciona no banco a nova senha do usuario
 				Cadastro c = new Cadastro();
 				return "login";
 			}//else {
@@ -109,12 +117,9 @@ public class ConsultaBean {
 
 
 //Editar Perfil - Início
-	public String editar() {
+	public String editar() { // Edita o usuario que está sendo referenciado no momento da execução
 		CadastroDao cDao = new CadastroDao();
 		cDao.editar(cadastro);
 		return "home.xhtml";
 	}
-	
-	
-
 }
