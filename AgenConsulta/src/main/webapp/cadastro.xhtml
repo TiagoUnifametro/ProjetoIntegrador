@@ -6,52 +6,51 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
-<!-- id, login, senha, nome, ativo, dataNascimento e dataCadastro -->
+	
 	<h:head>
-		<link rel="stylesheet" href="styleJ.css"/>
-		<h1>Cadastro Usuário</h1>
+		<link rel="stylesheet" href="style.css"/>
+		<h1 class="tituloCadastro">Cadastro Usuário</h1>
 		<title>Cadastro</title>
 	</h:head>
-	<h:body>
-		<div>
-		<p:panel header=" Novo Cadastro " >
-			<!--  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 Senha para exportar-->
-			<h:form>
-				
-				<h5>Nome:</h5>
-	   			<p:inputText value="#{consultaBean.cadastro.nome}" required="true"/>
+	
+	<h:body class="fundoCadastro">
+		<div >
+			<p:panel class="panelCadastro" header="Novo Cadastro" >
+				<!--  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 Senha para exportar-->
 			
-				<h5>Apelido:</h5>
-		      	<p:inputText value="#{consultaBean.cadastro.apelido}" required="true"/>
-			      	
-			      	
-		   		<h5>Senha:</h5>
-		        <p:password id="toggle" value="#{consultaBean.cadastro.senha}" toggleMask="true" redisplay="true" required="true"/>
+				<h:form>		
+					<h5>Nome:</h5>
+		   			<p:inputText class="labelLogin" value="#{consultaBean.cadastro.nome}" required="true"/>
 				
-				<h5>Data Nascimento:</h5>
-				<p:datePicker id="date" showIcon="true" value="#{consultaBean.cadastro.dataNascimento}" style="width:auto" required="true"/>
+					<h5 >Apelido:</h5>
+			      	<p:inputText class="labelLogin" value="#{consultaBean.cadastro.apelido}" required="true"/>
+				      	
+			   		<h5>Senha:</h5>
+			        <p:password class="labelLogin" id="toggle" value="#{consultaBean.cadastro.senha}" toggleMask="true" redisplay="true" required="true"/>
+					
+					<h5>Data Nascimento:</h5>
+					<p:datePicker class="labelLogin" id="date" showIcon="true" value="#{consultaBean.cadastro.dataNascimento}" style="width:auto" required="true"/>
+					
+					<h5>Status Usuário:</h5>
+		    		<p:inputText class="labelLogin" value="#{consultaBean.ativo()}" disabled="true" />
+
+					<h5>Data de Cadastro:</h5>
+					<p:inputText class="labelLogin" value="#{consultaBean.dataAtual()}" disabled="true" />
+
+					<br/> 
+					<br/>	
+				</h:form>		
+			 	
+					<p:commandButton type="submit" value="Salvar" styleClass="ui-button-outlined ui-button-success" action="#{consultaBean.salvar()}"/>
+					<p:linkButton style="margin-left: 5px" outcome="login.xhtml" value="Login" styleClass="ui-button-outlined ui-button-success"/>
+					
+				<h:form>
+					<p:messages id="detalhe" showDetail="true" closable="true" styleClass=".labels">
+		        		<p:autoUpdate/>
+		        	</p:messages>
+				</h:form>
 				
-				<h5>Status Usuário:</h5>
-				
-	    		<p:inputText value="#{consultaBean.ativo()}" disabled="true" />
-				<h5>Data de Cadastro:</h5>
-				<p:inputText value="#{consultaBean.dataAtual()}" disabled="true" />
-				<br/> 
-				<br/>	
-			
-			</h:form>		
-		 	
-				<p:commandButton type="submit" value="Salvar" styleClass="ui-button-outlined ui-button-success" action="#{consultaBean.salvar()}"/>
-				<p:linkButton outcome="login.xhtml" value="Login" styleClass="ui-button-outlined ui-button-success"/>
-				
-			</p:panel>
-			
-			<h:form>
-				<p:messages id="detalhe" showDetail="true" closable="true" styleClass=".labels">
-	        		<p:autoUpdate/>
-	        	</p:messages>
-			</h:form>
-			
+			</p:panel>			
 		</div>
 		
 	</h:body>

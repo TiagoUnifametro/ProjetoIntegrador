@@ -7,32 +7,34 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-<h:head>
-	<h1>Login</h1>
-	<title>Login</title>
-</h:head>	
+	<h:head>
+		<link rel="stylesheet" href="style.css"/>
+		<h1 class="tituloLogin">Login</h1>
+		<title>Login</title>
+	</h:head>	
 
-<h:body>
-
-	<h:form>
-		
-		<h5>Login:</h5>
-    	<p:inputText required="true" value="#{consultaBean.cadastro.apelido}"/>
-		
-		<h5>Senha:</h5>
-	    <p:password id="toggle" value="#{consultaBean.cadastro.senha}" toggleMask="true" redisplay="true" required="true"/>		
-		<br/>
-		<br/>
-		<p:commandButton type="submit" value="Entrar" styleClass="ui-button-outlined ui-button-success" action="#{consultaBean.logar()}"/>
-		<p:linkButton outcome="recupera.xhtml" value="Recuperar Senha" styleClass="ui-button-outlined ui-button-success"/>
-		<p:linkButton outcome="cadastro.xhtml" value="Cadastre-se" styleClass="ui-button-outlined ui-button-success"/>
-		
-	</h:form>
-	
-	<h:form>
-		<p:messages id="detalhe" showDetail="true" closable="true" styleClass=".labels">
-          			<p:autoUpdate/>
-        </p:messages>
-	</h:form>
-</h:body>	
+	<h:body class="fundoLogin">
+		<h:form>
+			<p:card class="cardLogin">
+			
+				<h5>Login:</h5>
+		    	<p:inputText class="labelLogin" required="true" value="#{consultaBean.cadastro.apelido}"/>
+				
+				<h5>Senha:</h5>
+			    <p:password class="labelLogin" id="toggle" value="#{consultaBean.cadastro.senha}" toggleMask="true" redisplay="true" required="true"/>		
+				<br/>
+				<br/>
+				<p:commandButton type="submit" value="Entrar" styleClass="ui-button-outlined ui-button-success" action="#{consultaBean.logar()}"/>
+				<p:linkButton style="margin-left:5px" outcome="recupera.xhtml" value="Recuperar Senha" styleClass="ui-button-outlined ui-button-success"/>
+				<p:linkButton style="margin-left:5px" outcome="cadastro.xhtml" value="Cadastre-se" styleClass="ui-button-outlined ui-button-success"/>
+			
+				<h:form>
+					<p:messages id="detalhe" showDetail="true" closable="true" styleClass=".labels">
+						<p:autoUpdate/>
+			        </p:messages>
+				</h:form>
+			
+			</p:card>
+		</h:form>
+	</h:body>	
 </html>

@@ -1,0 +1,67 @@
+@charset "utf-8";
+
+.tituloLogin{
+	color: orange;
+	font: fantasy;
+	margin-top: 100px;	
+	margin-bottom: 10px;
+	margin-left: 350px;
+	margin-right: 350px;
+}
+
+.cardLogin{
+	margin-top: 10px;	
+	margin-bottom: 100px;
+	margin-left: 350px;
+	margin-right: 350px;
+}
+
+.fundoLogin{
+	background: url("https://png.pngtree.com/background/20230417/original/pngtree-game-space-blip-picture-image_2444904.jpg");
+	background-attachment: fixed;
+}
+
+.labelLogin{
+	margin-top: -10px;
+	opacity: 1;
+}
+
+
+
+.panelCadastro{
+	margin-top: 10px;	
+	margin-bottom: 50px;
+	margin-left: 350px;
+	margin-right: 350px;
+	color: gray;
+	opacity: 0.94;
+}
+
+.tituloCadastro{
+	color: orange;
+	font: fantasy;
+	margin-top: 10px;	
+	margin-bottom: 10px;
+	margin-left: 350px;
+	margin-right: 350px;
+}
+
+.fundoCadastro{
+	background: url("https://i.pinimg.com/originals/68/1b/88/681b888e8876ce6622ffac0d9acaf52e.png");
+	background-attachment: fixed;
+}
+
+
+.cardRecupera{
+	margin-top: 10px;	
+	margin-bottom: 100px;
+	margin-left: 350px;
+	margin-right: 350px;
+	opacity: 0.94;
+}
+
+.fundoRecupera{
+	background: url("https://i.pinimg.com/originals/d5/e3/43/d5e343e3275d6ef25195174abc4076d6.jpg");
+	background-size: 1500px;
+};
+
