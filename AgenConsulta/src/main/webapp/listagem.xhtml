@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+	<h:head>
+		<link rel="stylesheet" href="style.css"/>
+		<h1 class="tituloLista">Listagem</h1>
+		<title>Listagem Usuários</title>
+	</h:head>
+
+	<h:body class="fundoRecupera">
+		<h:form>
+			<p:card class="cardLista">
+				<p:dataTable id="tabela" value="#{consultaBean.lista()}" var="list">
+					<p:column headerText="ID" ><h:outputLabel value="#{list.id}"/></p:column>
+					<p:column headerText="APELIDO" ><h:outputLabel value="#{list.apelido}"/></p:column>
+					<p:column headerText="STATUS" ><h:outputLabel value="#{list.ativo}"/></p:column>
+					<p:column headerText="DATA CADASTRO" ><h:outputLabel value="#{list.dataCadastro}"/></p:column>
+					<p:column headerText="DATA NASCIMENTO" ><h:outputLabel value="#{list.dataNascimento}"/></p:column>
+					<p:column headerText="NOME" ><h:outputLabel value="#{list.nome}"/></p:column>
+				
+				</p:dataTable>
+				<p:linkButton value="Voltar" style="margin-top: 10px" outcome="home.xhtml" styleClass="ui-button-outlined ui-button-success"/>
+			</p:card>
+		</h:form>		
+	</h:body>
+</html>

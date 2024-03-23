@@ -32,7 +32,8 @@
 				<p:password value="#{consultaBean.cadastro.senha}" toggleMask="true" redisplay="true" required="true"/>
 					
 				<h5>Status Usuário:</h5>
-				<p:outputLabel value="#{consultaBean.cadastro.ativo}" />
+				<p:selectBooleanButton offLabel="Inativo" onLabel="Ativo" value="#{consultaBean.cadastro.ativo}"/>
+				
 						
 				<h5>Data de Cadastro:</h5>
 				<p:outputLabel value="#{consultaBean.cadastro.dataCadastro}" />
@@ -41,6 +42,7 @@
 			
 			<p:commandButton type="submit" value="Salvar" styleClass="ui-button-outlined ui-button-success" action="#{consultaBean.editar()}"/>
 			<p:linkButton style="margin-left: 5px" outcome="home.xhtml" value="Voltar" styleClass="ui-button-outlined ui-button-success"/>
+			<p:commandButton style="margin-left: 5px" type="submit" value="Excluir" styleClass="ui-button-outlined ui-button-success" action="#{consultaBean.excluir()}"/>
 			
 		</p:card>
 	</h:body>

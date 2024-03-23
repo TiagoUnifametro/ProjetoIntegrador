@@ -63,5 +63,21 @@
 .fundoRecupera{
 	background: url("https://i.pinimg.com/originals/d5/e3/43/d5e343e3275d6ef25195174abc4076d6.jpg");
 	background-size: 1500px;
-};
+}
 
+.cardLista{
+	margin-top: 10px;	
+	margin-bottom: 10px;
+	margin-left: 100px;
+	margin-right: 100px;
+	opacity: 0.97;
+}
+
+.tituloLista{
+	color: orange;
+	font: fantasy;
+	margin-top: 10px;	
+	margin-bottom: 10px;
+	margin-left: 100px;
+	margin-right: 100px;
+};

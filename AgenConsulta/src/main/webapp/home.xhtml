@@ -27,7 +27,7 @@
 				<p:outputLabel value="#{consultaBean.cadastro.dataNascimento}" />
 				
 				<h5>Status Usuário:</h5>
-				<p:outputLabel value="#{consultaBean.cadastro.ativo}" />
+				<p:outputLabel value="#{consultaBean.ativoHome()}" />
 				
 				<h5>Data de Cadastro:</h5>
 				<p:outputLabel value="#{consultaBean.cadastro.dataCadastro}" />
@@ -36,7 +36,7 @@
 			<br/>
 			<p:linkButton outcome="login.xhtml" value="Voltar" styleClass="ui-button-outlined ui-button-success"/>
 			<p:linkButton style="margin-left: 5px" outcome="editar.xhtml" value="Editar" styleClass="ui-button-outlined ui-button-success"/>
-			
+			<p:linkButton style="margin-left: 5px" outcome="listagem.xhtml" value="Listagem" styleClass="ui-button-outlined ui-button-success"/>
 		</p:panel>		
 	</div>
 </h:body>

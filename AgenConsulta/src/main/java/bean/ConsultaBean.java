@@ -2,6 +2,7 @@ package bean;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import entidades.Cadastro;
 public class ConsultaBean {
 
 	private Cadastro cadastro = new Cadastro(); //Instancio objeto Cadastro
+
 
 	public	Cadastro getCadastro() {
 		return cadastro;
@@ -109,7 +111,7 @@ public class ConsultaBean {
 			//}
 		}
 
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error:", "Apelido ou Data de Nascimento inválidos, favor tentar novamente ou cadastre-se!"));
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error:", "Apelido ou Data de Nascimento inválidos, favor tentar novamente ou cadastre-se!"));
 		
 		return null;
 	}
@@ -122,4 +124,34 @@ public class ConsultaBean {
 		cDao.editar(cadastro);
 		return "home.xhtml";
 	}
+	
+	public String excluir() {
+		CadastroDao cDao = new CadastroDao();
+		cDao.excluir(cadastro);
+		cadastro = new Cadastro();
+		return "login.xhtml";
+	}
+//Editar Perfil - Fim
+	
+//Listagem - Início
+	public List<Cadastro> lista(){
+		CadastroDao cDao = new CadastroDao();
+		List<Cadastro> lista = cDao.pesquisaTodos();
+			return lista;
+		}
+	
+//Listagem - Fim
+	
+//Home - Início
+	public String ativoHome(){
+		String ativoHome;
+		if(cadastro.isAtivo()) {
+			ativoHome = "ATIVO";
+		}else {
+			ativoHome = "INATIVO";
+		}
+		return ativoHome;
+	}
+//Home - Fim
+	
 }
