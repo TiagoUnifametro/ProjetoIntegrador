@@ -2,6 +2,7 @@ package bean;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,7 +30,7 @@ public class ConsultaBean {
 		this.cadastro = cadastro;
 	}
 
-	
+
 //Cadastro - Início		
 	public String ativo() { //Retorna na tela de cadastro o status que o usuário vai ficar
 		String ativo;
@@ -44,11 +45,10 @@ public class ConsultaBean {
 
 	public String dataAtual() throws ParseException{ //Retorna na tela de cadastro a data atual de cadastro
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  // Especifica o formato da data
-		Date date = new Date(); // Puxa Data atual do sistema
-		String dataString = sdf.format(date); // Coloca a data atual em uma String
-		Date data = sdf.parse(dataString); // converte a data de String para Date
-		cadastro.setDataCadastro(data); // Seta em cadastro a data atual
-		return sdf.format(date);
+		Date atual = Date.from(Instant.now()); //Captura a data atual
+		String dAtual = sdf.format(atual); //formata a data para ano, mês e dia
+		cadastro.setDataCadastro(atual); //Seta a data atual
+		return dAtual;
 	}
 
 	public String salvar() throws ParseException { //Metodo para validação do apelido e salvar o usuario no banco
@@ -81,7 +81,6 @@ public class ConsultaBean {
 				cadastro = cadastroc;
 				return "home.xhtml"; //se o usuario digitado e senha estiverem cadastrada no banco então ele valida e retorna a tela de home
 			}
-		
 		}
 		
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error:", "Apelido ou Senha inválidos, favor tentar novamente ou cadastre-se!"));
@@ -120,7 +119,7 @@ public class ConsultaBean {
 
 //Editar Perfil - Início
 	public String editar() { // Edita o usuario que está sendo referenciado no momento da execução
-		CadastroDao cDao = new CadastroDao();
+		CadastroDao cDao = new CadastroDao(); //Cria o objeto Dao para pesquisar os dados no banco e salvar
 		cDao.editar(cadastro);
 		return "home.xhtml";
 	}
