@@ -19,7 +19,7 @@ import entidades.Cadastro;
 @ApplicationScoped
 public class ConsultaBean {
 
-	private Cadastro cadastro = new Cadastro(); //Instancio objeto Cadastro
+	private Cadastro cadastro = new Cadastro(); 
 
 
 	public	Cadastro getCadastro() {
@@ -32,7 +32,7 @@ public class ConsultaBean {
 
 
 //Cadastro - Início		
-	public String ativo() { //Retorna na tela de cadastro o status que o usuário vai ficar
+	public String ativo() { 
 		String ativo;
 		cadastro.setAtivo(true);
 		if(cadastro.isAtivo()) {
@@ -43,27 +43,27 @@ public class ConsultaBean {
 		return ativo;
 	}
 
-	public String dataAtual() throws ParseException{ //Retorna na tela de cadastro a data atual de cadastro
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  // Especifica o formato da data
-		Date atual = Date.from(Instant.now()); //Captura a data atual
-		String dAtual = sdf.format(atual); //formata a data para ano, mês e dia
-		cadastro.setDataCadastro(atual); //Seta a data atual
+	public String dataAtual() throws ParseException{ 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
+		Date atual = Date.from(Instant.now()); 
+		String dAtual = sdf.format(atual); 
+		cadastro.setDataCadastro(atual);
 		return dAtual;
 	}
 
-	public String salvar() throws ParseException { //Metodo para validação do apelido e salvar o usuario no banco
-			CadastroDao cDao = new CadastroDao(); //Cria o objeto Dao para pesquisar os dados no banco e salvar
-			List<Cadastro> lista = cDao.pesquisaTodos(); // Retorna uma lista dos usuarios armazenados no banco
+	public String salvar() throws ParseException { 
+			CadastroDao cDao = new CadastroDao(); 
+			List<Cadastro> lista = cDao.pesquisaTodos(); 
 			
-			for(Cadastro cadastroc : lista) { // loop para pesquisar dentro da lista cadastro se o apelido está em uso
+			for(Cadastro cadastroc : lista) { 
 				if(cadastro.getApelido().equals(cadastroc.getApelido())) {
 					//System.out.println("Usuario liberado");
 					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuario não cadastrado:", "Apelido já está em uso, favor tentar novamente!"));
-					return null; // caso apelido esteja em uso ele sai do metódo e retorna o erro de cadastro
+					return null; 
 				}
 			}
 
-		cDao.salvar(cadastro);// salva o usuario no banco de dados
+		cDao.salvar(cadastro);
 		cadastro = new Cadastro();
 		return "login.xhtml";
 	}
@@ -72,14 +72,14 @@ public class ConsultaBean {
 	
 //Login - Início
 	public String logar(){
-		CadastroDao cDao = new CadastroDao(); //Cria o objeto Dao para pesquisar os dados no banco
-		List<Cadastro> lista = cDao.pesquisaTodos(); // Retorna uma lista dos usuarios armazenados no banco
+		CadastroDao cDao = new CadastroDao(); 
+		List<Cadastro> lista = cDao.pesquisaTodos(); 
 		
-		for(Cadastro cadastroc : lista) { // loop para pesquisar dentro da lista cadastro se há o usuario digitado na tela de login
+		for(Cadastro cadastroc : lista) { 
 			if(cadastro.getApelido().equals(cadastroc.getApelido()) && cadastro.getSenha().equals(cadastroc.getSenha())) {
 				//System.out.println("Usuario liberado");
 				cadastro = cadastroc;
-				return "home.xhtml"; //se o usuario digitado e senha estiverem cadastrada no banco então ele valida e retorna a tela de home
+				return "home.xhtml"; 
 			}
 		}
 		
@@ -92,17 +92,17 @@ public class ConsultaBean {
 
 //Trocar Senha - Início
 	public String trocarSenha(){
-		CadastroDao cDao = new CadastroDao(); //Cria o objeto Dao para pesquisar os dados no banco
-		List<Cadastro> lista = cDao.pesquisaTodos(); // Retorna uma lista dos usuarios armazenados no banco
+		CadastroDao cDao = new CadastroDao(); 
+		List<Cadastro> lista = cDao.pesquisaTodos(); 
 		
-		for(Cadastro cadastroc : lista) { // loop para pesquisar dentro da lista cadastro se há o usuario digitado na tela de login
+		for(Cadastro cadastroc : lista) { 
 			//System.out.println(cadastroc.getApelido() + " - " + cadastroc.getSenha());
 			
 			if(cadastro.getApelido().equals(cadastroc.getApelido()) && cadastro.getDataNascimento().equals(cadastroc.getDataNascimento())) {
 				//System.out.println("Usuario liberado");
-				cadastroc.setSenha(cadastro.getSenha()); // seta no objeto retornado do banco a senha nova do usuário
+				cadastroc.setSenha(cadastro.getSenha()); 
 				CadastroDao cDaoE = new CadastroDao();
-				cDaoE.editar(cadastroc); // adiciona no banco a nova senha do usuario
+				cDaoE.editar(cadastroc); 
 				Cadastro c = new Cadastro();
 				return "login";
 			}//else {
@@ -118,8 +118,8 @@ public class ConsultaBean {
 
 
 //Editar Perfil - Início
-	public String editar() { // Edita o usuario que está sendo referenciado no momento da execução
-		CadastroDao cDao = new CadastroDao(); //Cria o objeto Dao para pesquisar os dados no banco e salvar
+	public String editar() { 
+		CadastroDao cDao = new CadastroDao(); 
 		cDao.editar(cadastro);
 		return "home.xhtml";
 	}
