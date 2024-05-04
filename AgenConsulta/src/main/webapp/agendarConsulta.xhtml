@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	
+	<h:head>
+		<link rel="stylesheet" href="style.css"/>
+		<h1 class="tituloCadastro">Cadastro de Consulta</h1>
+		<title>Cadastro de Consulta</title>
+	</h:head>
+	
+	<h:body class="fundoCadastro">
+		<div >
+			<p:panel class="panelCadastro" header="Agendar Consulta" >
+				<!--  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 Senha para exportar-->
+			
+				<h:form id="agenda">		
+					<h5>Nome:</h5>
+		   			<p:inputText id="Nome" class="labelLogin" value="#{consultaBean.agendamento.nomePaciente}" required="true"/>
+				
+					<h5>Email:</h5>
+			      	<p:inputText id="Email" class="labelLogin" value="#{consultaBean.agendamento.email}" required="true"/>
+				      	
+			   		<h5>Status:</h5>
+			        <p:inputText class="labelLogin" value="#{consultaBean.statusConsulta()}" required="true" disabled="true"/>
+					
+					<h5>Clínica:</h5>
+			      	<p:selectOneMenu id="Clinica" value="#{consultaBean.agendamento.clinica}" required="true">
+			      		<f:selectItem itemLabel="Selecione" noSelectionOption="true" />
+			      		<f:selectItem itemValue="Clinica Popular" itemLabel="Clinica Popular" />
+			      		<f:selectItem itemValue="Clinica SiM" itemLabel="Clinica SiM" />	
+			      		<f:selectItem itemValue="Clinica Geral" itemLabel="Clinica Geral" />		      		
+			      	</p:selectOneMenu>
+				    
+				    
+					<h5>Médico:</h5>
+				    <p:selectOneMenu id="Medico" value="#{consultaBean.agendamento.idMedico}" required="true">
+		  			    <f:selectItem itemLabel="Selecione" noSelectionValue="true"/>
+						<f:selectItems value="#{consultaBean.listaMedico()}" var="c" itemLabel="#{c.nomeMedico}" itemValue="#{c.id}"/>
+					</p:selectOneMenu>
+				    
+				    
+				    
+					<h5>Data e Hora Consulta:</h5>
+					<p:datePicker class="labelLogin" id="date" showIcon="true" value="#{consultaBean.agendamento.dataHoraAgendamento}" style="width:auto" required="true" showTime="true"/>
+					
+					<h5>Data de Cadastro:</h5>
+					<p:inputText class="labelLogin" value="#{consultaBean.dataAtualAgenda()}" disabled="true" />
+
+					<br/> 
+					<br/>	
+				</h:form>		
+			 	
+					<p:commandButton type="submit" value="Salvar" styleClass="ui-button-outlined ui-button-success" action="#{consultaBean.salvarAgendamento()}" update="agenda"/>
+					<p:linkButton style="margin-left: 5px" outcome="login.xhtml" value="Login" styleClass="ui-button-outlined ui-button-success"/>
+					
+				<h:form>
+					<p:messages id="detalhe" showDetail="true" closable="true" styleClass=".labels">
+		        		<p:autoUpdate/>
+		        	</p:messages>
+				</h:form>
+				
+			</p:panel>			
+		</div>
+		
+	</h:body>
+</html>
