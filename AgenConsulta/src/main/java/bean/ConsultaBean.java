@@ -12,18 +12,42 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import dao.AgendamentoDao;
 import dao.CadastroDao;
+import dao.MedicoDao;
+import entidades.Agendamento;
 import entidades.Cadastro;
+import entidades.Medico;
 
 @ManagedBean
 @ApplicationScoped
 public class ConsultaBean {
 
 	private Cadastro cadastro = new Cadastro(); 
+	private Agendamento agendamento = new Agendamento();
+	private Medico medico = new Medico(); 
+	private List<Medico> listaMedico;
+	
+	
 
+	public Medico getMedico() {
+		return medico;
+	}
+
+	public void setMedico(Medico medico) {
+		this.medico = medico;
+	}
 
 	public	Cadastro getCadastro() {
 		return cadastro;
+	}
+
+	public Agendamento getAgendamento() {
+		return agendamento;
+	}
+
+	public void setAgendamento(Agendamento agendamento) {
+		this.agendamento = agendamento;
 	}
 
 	public void setCadastro(Cadastro cadastro) {
@@ -152,5 +176,64 @@ public class ConsultaBean {
 		return ativoHome;
 	}
 //Home - Fim
+	
+	
+	
+	
+	
+	
+	
+//AGENDAMENTO DE CONSULTAS
+	
+	
+	
+	
+	
+	
+//Agendamento - Início
+	
+	public String statusConsulta() {
+		return agendamento.getStatus().toString();
+	}
+		
+	public List<Medico> listaMedico(){
+		MedicoDao mDao = new MedicoDao();
+		listaMedico = mDao.pesquisaTodos();
+		return listaMedico;
+	}
+	
+	public String dataAtualAgenda() throws ParseException{ 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
+		Date atual = Date.from(Instant.now()); 
+		String dAtual = sdf.format(atual); 
+		agendamento.setDataCadastro(atual);
+		return dAtual;
+	}
+	
+	public String salvarAgendamento() {
+		AgendamentoDao aDao = new AgendamentoDao();
+		Agendamento result = aDao.pesquisaAgendamento(agendamento.getClinica(), agendamento.getDataHoraAgendamento(), agendamento.getMedico());
+		
+		if(result != null) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error:", "Já existe agendamento para esse horário e médico, favor escolher outro!"));
+			return null;
+		}else {
+			for(Medico m : listaMedico) {
+				if(m.getId() == agendamento.getIdMedico()) {
+					agendamento.setMedico(m.getNomeMedico());
+				}
+			}
+			
+			aDao.salvar(agendamento);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso:", "Agendamento marcado com sucesso! O número do agendamento é: " + agendamento.getId()));
+		}
+		
+		agendamento = new Agendamento();
+		return null;
+	}
+	
+//Agendamento - Fim
+	
+	
 	
 }

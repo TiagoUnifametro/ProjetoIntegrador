@@ -44,6 +44,12 @@
 			<p:linkButton style="margin-left: 5px" outcome="home.xhtml" value="Voltar" styleClass="ui-button-outlined ui-button-success"/>
 			<p:commandButton style="margin-left: 5px" type="submit" value="Excluir" styleClass="ui-button-outlined ui-button-success" action="#{consultaBean.excluir()}"/>
 			
+			<h:form>
+				<p:messages id="detalhe" showDetail="true" closable="true" styleClass=".labels">
+		       		<p:autoUpdate/>
+		       	</p:messages>
+			</h:form>
+			
 		</p:card>
 	</h:body>
 </html>
