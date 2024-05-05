@@ -12,6 +12,8 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 
+import org.hibernate.internal.build.AllowSysOut;
+
 import dao.AgendamentoDao;
 import dao.CadastroDao;
 import dao.MedicoDao;
@@ -27,7 +29,7 @@ public class ConsultaBean {
 	private Agendamento agendamento = new Agendamento();
 	private Medico medico = new Medico(); 
 	private List<Medico> listaMedico;
-	
+	private List<Agendamento> listaAgendamento;
 	
 
 	public Medico getMedico() {
@@ -109,6 +111,7 @@ public class ConsultaBean {
 		
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Error:", "Apelido ou Senha inválidos, favor tentar novamente ou cadastre-se!"));
 		cadastro = new Cadastro();
+		agendamento = new Agendamento();
 		return null;
 	}
 //Login - Fim
@@ -199,6 +202,7 @@ public class ConsultaBean {
 	public List<Medico> listaMedico(){
 		MedicoDao mDao = new MedicoDao();
 		listaMedico = mDao.pesquisaTodos();
+		//System.out.println("REFLETIUUUUUUU");
 		return listaMedico;
 	}
 	
@@ -211,9 +215,13 @@ public class ConsultaBean {
 	}
 	
 	public String salvarAgendamento() {
-		AgendamentoDao aDao = new AgendamentoDao();
-		Agendamento result = aDao.pesquisaAgendamento(agendamento.getClinica(), agendamento.getDataHoraAgendamento(), agendamento.getMedico());
 		
+		System.out.println(agendamento.getClinica());
+		System.out.println(agendamento.getDataHoraAgendamento());
+		System.out.println(agendamento.getIdMedico());
+		AgendamentoDao aDao = new AgendamentoDao();
+		Agendamento result = aDao.pesquisaAgendamento(agendamento.getClinica(), agendamento.getDataHoraAgendamento(), agendamento.getIdMedico());
+	
 		if(result != null) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error:", "Já existe agendamento para esse horário e médico, favor escolher outro!"));
 			return null;
@@ -234,6 +242,73 @@ public class ConsultaBean {
 	
 //Agendamento - Fim
 	
+//Listgem Médico - Ínicio
 	
+	public String salvarMedico() {
+		MedicoDao mDao = new MedicoDao();
+		mDao.salvar(medico);
+		return null;
+	}
+	
+//Listgem Médico - Fim
+	
+	
+//Listagem Agendamento - Ínicio
+	
+	public List<Agendamento> listaAgendamento() {
+		AgendamentoDao aDao = new AgendamentoDao();		
+		listaAgendamento = aDao.pesquisaTodos();
+		return listaAgendamento;
+	}
+
+	
+	public String excluirAgendamento(Agendamento list){
+		AgendamentoDao aDao = new AgendamentoDao();
+		aDao.excluir(list);
+		return null;
+	}
+	
+	public String editarAgendamento() {
+		AgendamentoDao aDao = new AgendamentoDao();
+		
+		Agendamento resultPorId = (Agendamento) aDao.pesquisaAgendamentoPorID(agendamento.getId());
+		
+		if(resultPorId != null) {
+			
+			if(agendamento.getClinica().equals(resultPorId.getClinica()) != true || agendamento.getDataHoraAgendamento().compareTo(resultPorId.getDataHoraAgendamento()) != 0  || resultPorId.getIdMedico() != agendamento.getIdMedico()) {
+			
+				Agendamento pesquisaPorAgendamento = aDao.pesquisaAgendamento(agendamento.getClinica(), agendamento.getDataHoraAgendamento(), agendamento.getIdMedico());
+				
+				if(pesquisaPorAgendamento != null) {
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error:", "Já existe agendamento para esse horário e médico, favor escolher outro!"));
+					return null;
+				}else {
+					inputMedicoAgendamento();
+					aDao.editar(agendamento);
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso:", "Agendamento marcado com sucesso! O número do agendamento é: " + agendamento.getId()));
+				}
+			}else {
+				inputMedicoAgendamento();
+				aDao.editar(agendamento);
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso:", "Agendamento marcado com sucesso! O número do agendamento é: " + agendamento.getId()));
+			}
+		}
+		return null;
+	}
+	
+	private void inputMedicoAgendamento() {
+		for(Medico m : listaMedico) {
+			if(m.getId() == agendamento.getIdMedico()) {
+				agendamento.setMedico(m.getNomeMedico());
+			}
+		}
+	}
+	
+	public String cancelarAgendamento(Agendamento a) {
+		AgendamentoDao aDao = new AgendamentoDao();
+		a.setStatus("Cancelado");
+		aDao.editar(a);
+		return null;
+	}
 	
 }

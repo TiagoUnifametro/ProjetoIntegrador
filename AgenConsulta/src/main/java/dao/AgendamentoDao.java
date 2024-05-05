@@ -47,12 +47,12 @@ public class AgendamentoDao {
 	}
 
 
-	public static Agendamento pesquisaAgendamento(String clinica, Date dataHora, String medico) {
+	public static Agendamento pesquisaAgendamento(String clinica, Date dataHora, Integer idMedico) {
 		EntityManager em = JPAUtil.criarEntityManager();
 		Agendamento agendamento = new Agendamento();
-		Query q = em.createQuery("select a from Agendamento a where a.medico = :medico and a.dataHoraAgendamento = :dataHora and a.clinica = :clinica");
+		Query q = em.createQuery("select a from Agendamento a where a.idMedico = :idMedico AND a.dataHoraAgendamento = :dataHora AND a.clinica = :clinica");
 		q.setParameter("dataHora", dataHora);
-		q.setParameter("medico", medico);
+		q.setParameter("idMedico", idMedico);
 		q.setParameter("clinica", clinica);
 		
 		try {
@@ -64,7 +64,20 @@ public class AgendamentoDao {
 		return agendamento;
 	}
 	
-	
+	public static Agendamento pesquisaAgendamentoPorID(Integer id) {
+		EntityManager em = JPAUtil.criarEntityManager();
+		Agendamento agendamento = new Agendamento();
+		Query q = em.createQuery("select a from Agendamento a where a.id = :id");
+		q.setParameter("id", id);
+		
+		try {
+			agendamento = (Agendamento) q.getSingleResult();
+		}catch (Exception e) {
+			agendamento = null;
+		}
+		
+		return agendamento;
+	}
 	
 
 }

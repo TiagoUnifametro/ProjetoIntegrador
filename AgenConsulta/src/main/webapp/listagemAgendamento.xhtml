@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+	<h:head>
+		<link rel="stylesheet" href="style.css"/>
+		<h1 class="tituloLista">Listagem de Consultas</h1>
+		<title>Listagem Agendamentos</title>
+	</h:head>
+
+	<h:body class="fundoRecupera">
+		<h:form id="form">
+			<p:card class="cardLista">
+				<p:dataTable id="tabela" style="font-size: small" value="#{consultaBean.listaAgendamento()}" var="list">
+					<p:column headerText="ID" ><h:outputLabel class="listaAgendamento" value="#{list.id}"/></p:column>
+					<p:column headerText="NOME PACIENTE" ><h:outputLabel value="#{list.nomePaciente}"/></p:column>
+					<p:column headerText="EMAIL" ><h:outputLabel value="#{list.email}"/></p:column>
+					<p:column headerText="CLÍNICA" ><h:outputLabel value="#{list.clinica}"/></p:column>
+					<p:column headerText="ID MÉDICO" ><h:outputLabel value="#{list.idMedico}"/></p:column>
+					<p:column headerText="MÉDICO" ><h:outputLabel value="#{list.medico}"/></p:column>
+					<p:column headerText="DATA E HORA CONSULTA" ><h:outputLabel value="#{list.dataHoraAgendamento}"/></p:column>
+					<p:column headerText="STATUS" ><h:outputLabel value="#{list.status}"/></p:column>
+					<p:column headerText="DATA CADASTRO" ><h:outputLabel value="#{list.dataCadastro}"/></p:column>
+					<p:column headerText="EXCLUIR" ><p:commandButton icon="pi pi-times" styleClass="rounded-button ui-button-danger ui-button-outlined" type="submit" action="#{consultaBean.excluirAgendamento(list)}" update="form"/> </p:column>
+					
+					<p:column headerText="EDITAR" >
+						<p:commandButton icon="pi pi-pencil" styleClass="rounded-button ui-button-outlined" oncomplete="PF('editar').show()" update=":editar">
+							<f:setPropertyActionListener target="#{consultaBean.agendamento}" value="#{list}"></f:setPropertyActionListener>
+						</p:commandButton>
+					</p:column>
+				
+					<p:column headerText="CANCELAR" ><p:commandButton icon="pi pi-ban" styleClass="rounded-button ui-button-warning ui-button-outlined" type="submit" action="#{consultaBean.cancelarAgendamento(list)}" update="form"/> </p:column>
+				
+				</p:dataTable>
+				<p:linkButton value="Voltar" style="margin-top: 10px" outcome="home.xhtml" styleClass="ui-button-outlined ui-button-success"/>
+			
+			<p:messages id="detalhe" showDetail="true" closable="true" styleClass=".labels">
+		        		<p:autoUpdate/>
+		        	</p:messages>
+			
+			</p:card>
+			
+			
+					
+				
+			
+			
+		</h:form>
+		
+		<p:dialog header="Editar Consulta" id="editar" widgetVar="editar" modal="true" showEffect="fade" hideEffect="drop">
+			<h:form id="formModal">
+			 	<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+					<p:outputLabel value="Nome:"/>
+		   			<p:inputText value="#{consultaBean.agendamento.nomePaciente}"/>
+				 
+					<p:outputLabel value="Email:"/>
+			      	<p:inputText id="Email"  class="labelLogin" value="#{consultaBean.agendamento.email}" required="true"/>
+			      	    	
+			   		<p:outputLabel value="Status:"/>
+			   		<p:selectOneMenu id="Status" value="#{consultaBean.agendamento.status}" required="true">
+			      		<f:selectItem itemValue="Realizado" itemLabel="Realizado" />
+			      		<f:selectItem itemValue="Cancelado" itemLabel="Cancelado" />	
+			      		<f:selectItem itemValue="Agendado" itemLabel="Agendado" />		      		
+			      	</p:selectOneMenu>
+			        
+					<p:outputLabel value="Clínica:"/>
+			      	<p:selectOneMenu id="Clinica" value="#{consultaBean.agendamento.clinica}" required="true">
+			      		<f:selectItem itemValue="Clinica Popular" itemLabel="Clinica Popular" />
+			      		<f:selectItem itemValue="Clinica SiM" itemLabel="Clinica SiM" />	
+			      		<f:selectItem itemValue="Clinica Geral" itemLabel="Clinica Geral" />		      		
+			      	</p:selectOneMenu>
+
+					<p:outputLabel value="Médico:"/>
+				    <p:selectOneMenu id="Medico" value="#{consultaBean.agendamento.idMedico}" required="true">
+		  			    <f:selectItem itemLabel="Selecione" noSelectionValue="true"/>
+						<f:selectItems value="#{consultaBean.listaMedico()}" var="c" itemLabel="#{c.nomeMedico}" itemValue="#{c.id}"/>
+					</p:selectOneMenu>
+				    
+					<p:outputLabel value="Data e Hora Consulta:"/>
+					<p:datePicker class="labelLogin" id="date" showIcon="true" value="#{consultaBean.agendamento.dataHoraAgendamento}" style="width:auto" required="true" showTime="true"/>
+					
+					<p:outputLabel value="Data de Cadastro:"/>
+					<p:inputText class="labelLogin" value="#{consultaBean.dataAtualAgenda()}" disabled="true" />
+
+				</p:panelGrid>
+				
+				<p:commandButton type="submit" value="Salvar" action="#{consultaBean.editarAgendamento()}" update="form"  onclick="PF('editar').hide()" styleClass="ui-button-outlined ui-button-success"/>
+				
+			</h:form>
+		</p:dialog>
+		
+				
+		
+	</h:body>
+</html>
