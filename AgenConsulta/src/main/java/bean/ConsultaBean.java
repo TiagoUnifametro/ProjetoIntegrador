@@ -226,12 +226,7 @@ public class ConsultaBean {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error:", "Já existe agendamento para esse horário e médico, favor escolher outro!"));
 			return null;
 		}else {
-			for(Medico m : listaMedico) {
-				if(m.getId() == agendamento.getIdMedico()) {
-					agendamento.setMedico(m.getNomeMedico());
-				}
-			}
-			
+			inputMedicoAgendamento();
 			aDao.salvar(agendamento);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso:", "Agendamento marcado com sucesso! O número do agendamento é: " + agendamento.getId()));
 		}
