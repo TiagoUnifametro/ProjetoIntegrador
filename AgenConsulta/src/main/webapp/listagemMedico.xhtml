@@ -28,15 +28,16 @@
 		</h:form>
 		
 		<p:dialog id="novoMedico" widgetVar="novoMedico" modal="true" header="Adicionar Novo Médico" showEffect="fade" hideEffect="drop">
-				<h:form>
-					<p:panelGrid columns="2">
-						<p:outputLabel value="Nome Médico:"/>
-						<p:inputText value="#{consultaBean.medico.nomeMedico}" required="true"/>
-					</p:panelGrid>
-					<p:commandButton class="botaoMedico" value="Salvar" type="submit" action="#{consultaBean.salvarMedico()}" onclick="PF('editar').hide()" styleClass="ui-button-outlined ui-button-success"/>
-					<p:commandButton class="botaoMedico" value="Cancelar" onclick="PF('editar').hide()" styleClass="ui-button-outlined ui-button-success"/>
-				</h:form>
-			</p:dialog>
+			<h:form>
+				<p:panelGrid columns="2">
+					<p:outputLabel value="Nome Médico:"/>
+					<p:inputText value="#{consultaBean.medico.nomeMedico}" required="true"/>
+				</p:panelGrid>
+				
+				<p:commandButton class="botaoMedico" value="Salvar" type="submit" action="#{consultaBean.salvarMedico()}" onclick="PF('editar').hide()" styleClass="ui-button-outlined ui-button-success"/>
+				<p:commandButton class="botaoMedico" value="Cancelar" onclick="PF('editar').hide()" styleClass="ui-button-outlined ui-button-success"/>
+			</h:form>
+		</p:dialog>
 		
 	</h:body>
 </html>

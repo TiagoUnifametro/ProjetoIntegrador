@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+	<link rel="stylesheet" href="style.css" />
+	<h1 class="tituloLista">Listagem</h1>
+	<title>Listagem Pacientes</title>
+</h:head>
+
+<h:body class="fundoRecupera">
+	<h:form id="form">
+		<p:card class="cardLista">
+			<p:dataTable id="tabela" value="#{consultaBean.listaPaciente()}" var="listP">
+				<p:column headerText="ID">
+					<h:outputLabel value="#{listP.id}" />
+				</p:column>
+				<p:column headerText="NOME">
+					<h:outputLabel value="#{listP.nome}" />
+				</p:column>
+				<p:column headerText="DOCUMENTO">
+					<h:outputLabel value="#{listP.documento}" />
+				</p:column>
+				<p:column headerText="SEXO">
+					<h:outputLabel value="#{listP.sexo}" />
+				</p:column>
+				<p:column headerText="DATA DE NASCIMENTO">
+					<h:outputLabel value="#{listP.dataDeNascimento}" />
+				</p:column>
+				
+				<p:column headerText="EXCLUIR">
+					<p:commandButton icon="pi pi-times"
+						styleClass="rounded-button ui-button-danger ui-button-outlined"
+						type="submit" action="#{consultaBean.excluirPaciente(listP)}"
+						update="form" />
+				</p:column>
+
+				<p:column headerText="EDITAR">
+					<p:commandButton icon="pi pi-pencil" styleClass="rounded-button ui-button-outlined" oncomplete="PF('editar').show()" update=":editar">
+						<f:setPropertyActionListener target="#{consultaBean.paciente}" value="#{listP}"></f:setPropertyActionListener>
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:linkButton value="Voltar" style="margin-top: 10px"
+				outcome="home.xhtml"
+				styleClass="ui-button-outlined ui-button-success" />
+
+			<p:commandButton style="margin-left: 5px" value="Novo Paciente"
+				oncomplete="PF('novoPaciente').show()" update=":novoPaciente"
+				styleClass="ui-button-outlined ui-button-success" />
+		</p:card>
+	</h:form>
+
+	<p:dialog id="novoPaciente" widgetVar="novoPaciente" modal="true"
+		header="Adicionar Novo Paciente" showEffect="fade" hideEffect="drop">
+		<h:form>
+			<p:panelGrid columns="2">
+				<p:outputLabel value="Nome Paciente:" />
+				<p:inputText value="#{consultaBean.paciente.nome}" required="true" />
+
+				<p:outputLabel value="Documento:" />
+				<p:inputText value="#{consultaBean.paciente.documento}" required="true" />
+
+				<p:outputLabel value="Sexo:" />
+				<p:selectOneMenu required="true" value="#{consultaBean.paciente.sexo}">
+					<f:selectItem itemLabel="Selecione" />
+					<f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+					<f:selectItem itemLabel="Feminino" itemValue="Feminino" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Data de Nascimento:" />
+				<p:datePicker id="date" showIcon="true" value="#{consultaBean.paciente.dataDeNascimento}" style="width:auto" required="true" />
+			</p:panelGrid>
+
+			<p:commandButton value="Salvar" type="submit" action="#{consultaBean.salvarPaciente()}" onclick="PF('novoPaciente').hide()" styleClass="ui-button-outlined ui-button-success" update="form"/>
+			<p:commandButton value="Cancelar" onclick="PF('novoPaciente').hide()" styleClass="ui-button-outlined ui-button-success" />
+		</h:form>
+	</p:dialog>
+
+	<h:form>
+		<p:messages id="detalhe" showDetail="true" closable="true"
+			styleClass=".labels">
+			<p:autoUpdate />
+		</p:messages>
+	</h:form>
+
+
+	<p:dialog header="Editar Paciente" id="editar" widgetVar="editar" modal="true" showEffect="fade" hideEffect="drop">
+		<h:form id="formModal">
+			<p:panelGrid columns="2" layout="grid" styleClass="ui-panelgrid-blank ui-fluid">
+				<p:outputLabel value="Nome Paciente:" />
+				<p:inputText value="#{consultaBean.paciente.nome}" required="true" />
+
+				<p:outputLabel value="Documento:" />
+				<p:inputText value="#{consultaBean.paciente.documento}" required="true" />
+
+				<p:outputLabel value="Sexo:" />
+				<p:selectOneMenu required="true" value="#{consultaBean.paciente.sexo}">
+					<f:selectItem itemLabel="Selecione" />
+					<f:selectItem itemLabel="Masculino" itemValue="Masculino" />
+					<f:selectItem itemLabel="Feminino" itemValue="Feminino" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Data de Nascimento:" />
+				<p:datePicker id="date" showIcon="true" value="#{consultaBean.paciente.dataDeNascimento}" style="width:auto" required="true" />
+
+			</p:panelGrid>
+
+			<p:commandButton type="submit" value="Salvar" action="#{consultaBean.editarPaciente()}" update="form" onclick="PF('editar').hide()" styleClass="ui-button-outlined ui-button-success" />
+
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

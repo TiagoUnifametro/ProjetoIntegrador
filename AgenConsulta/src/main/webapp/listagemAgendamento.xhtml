@@ -39,18 +39,14 @@
 				</p:dataTable>
 				<p:linkButton value="Voltar" style="margin-top: 10px" outcome="home.xhtml" styleClass="ui-button-outlined ui-button-success"/>
 			
-			<p:messages id="detalhe" showDetail="true" closable="true" styleClass=".labels">
+				<p:messages id="detalhe" showDetail="true" closable="true" styleClass=".labels">
 		        		<p:autoUpdate/>
-		        	</p:messages>
+		        </p:messages>
 			
 			</p:card>
-			
-			
-					
-				
-			
-			
 		</h:form>
+		
+		
 		
 		<p:dialog header="Editar Consulta" id="editar" widgetVar="editar" modal="true" showEffect="fade" hideEffect="drop">
 			<h:form id="formModal">
@@ -86,7 +82,6 @@
 					
 					<p:outputLabel value="Data de Cadastro:"/>
 					<p:inputText class="labelLogin" value="#{consultaBean.dataAtualAgenda()}" disabled="true" />
-
 				</p:panelGrid>
 				
 				<p:commandButton type="submit" value="Salvar" action="#{consultaBean.editarAgendamento()}" update="form"  onclick="PF('editar').hide()" styleClass="ui-button-outlined ui-button-success"/>

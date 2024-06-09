@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+	<link rel="stylesheet" href="style.css" />
+	<h1 class="tituloLista">Listagem</h1>
+	<title>Listagem Consultas</title>
+</h:head>
+
+<h:body class="fundoRecupera">
+	<h:form id="form">
+		<p:card class="cardLista">
+			<p:dataTable id="tabela" value="#{consultaBean.listaConsulta()}"
+				var="listC">
+				<p:column headerText="ID">
+					<h:outputLabel value="#{listC.id}" />
+				</p:column>
+				<p:column headerText="QUEIXA PRINCIPAL">
+					<h:outputLabel value="#{listC.queixaPrincipal}" />
+				</p:column>
+				<p:column headerText="MEDICO">
+					<h:outputLabel value="#{listC.medico}" />
+				</p:column>
+				<p:column headerText="DIAGNOSTICO">
+					<h:outputLabel value="#{listC.diagnostico}" />
+				</p:column>
+				<p:column headerText="PACIENTE">
+					<h:outputLabel value="#{listC.paciente}" />
+				</p:column>
+
+
+
+				<p:column headerText="EXCLUIR">
+					<p:commandButton icon="pi pi-times"
+						styleClass="rounded-button ui-button-danger ui-button-outlined"
+						type="submit" action="#{consultaBean.excluirConsulta(listC)}"
+						update="form" />
+				</p:column>
+
+				<p:column headerText="EDITAR">
+					<p:commandButton icon="pi pi-pencil"
+						styleClass="rounded-button ui-button-outlined"
+						oncomplete="PF('editar').show()" update=":editar">
+						<f:setPropertyActionListener target="#{consultaBean.consulta}"
+							value="#{listC}"></f:setPropertyActionListener>
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+			<p:linkButton value="Voltar" style="margin-top: 10px"
+				outcome="home.xhtml"
+				styleClass="ui-button-outlined ui-button-success" />
+
+			<p:commandButton style="margin-left: 5px" value="Nova Consulta"
+				oncomplete="PF('novaConsulta').show()" update="novaConsulta"
+				styleClass="ui-button-outlined ui-button-success" />
+		</p:card>
+	</h:form>
+
+	<p:dialog id="novaConsulta" widgetVar="novaConsulta" modal="true"
+		header="Adicionar Nova Consulta" showEffect="fade" hideEffect="drop">
+		<h:form>
+			<p:panelGrid columns="2">
+
+				<p:outputLabel value="Paciente:" />
+				<p:selectOneMenu id="Paciente" value="#{consultaBean.paciente.id}"
+					required="true">
+					<f:selectItem itemLabel="Selecione" noSelectionValue="true" />
+					<f:selectItems value="#{consultaBean.listaPaciente()}" var="c"
+						itemLabel="#{c.nome}" itemValue="#{c.id}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Médico:" />
+				<p:selectOneMenu id="Medico" value="#{consultaBean.medico.id}"
+					required="true">
+					<f:selectItem itemLabel="Selecione" noSelectionValue="true" />
+					<f:selectItems value="#{consultaBean.listaMedico()}" var="c"
+						itemLabel="#{c.nomeMedico}" itemValue="#{c.id}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Queixa Principal:" />
+				<p:inputText value="#{consultaBean.consulta.queixaPrincipal}"
+					required="true" />
+
+
+				<p:outputLabel value="Diagnóstico:" />
+				<p:inputText value="#{consultaBean.consulta.diagnostico}"
+					required="true" />
+
+
+			</p:panelGrid>
+
+			<p:commandButton class="botaoMedico" value="Salvar" update="form"
+				type="submit" action="#{consultaBean.salvarConsulta()}"
+				onclick="PF('novaConsulta').hide()"
+				styleClass="ui-button-outlined ui-button-success" />
+			<p:commandButton class="botaoMedico" value="Cancelar"
+				onclick="PF('novaConsulta').hide()"
+				styleClass="ui-button-outlined ui-button-success" />
+		</h:form>
+	</p:dialog>
+
+	<h:form>
+		<p:messages id="detalhe" showDetail="true" closable="true"
+			styleClass=".labels">
+			<p:autoUpdate />
+		</p:messages>
+	</h:form>
+
+
+	<p:dialog header="Editar Consulta" id="editar" widgetVar="editar"
+		modal="true" showEffect="fade" hideEffect="drop" closable="false">
+		<h:form id="formModal">
+			<p:panelGrid columns="2" layout="grid"
+				styleClass="ui-panelgrid-blank ui-fluid">
+				<p:outputLabel value="Paciente:" />
+				<p:inputText value="#{consultaBean.consulta.paciente}" disabled="true" />
+
+				<p:outputLabel value="Médico:" />
+				<p:inputText value="#{consultaBean.consulta.medico}" disabled="true"/>
+
+				<p:outputLabel value="Queixa Principal:" />
+				<p:inputText value="#{consultaBean.consulta.queixaPrincipal}"/>
+
+				<p:outputLabel value="Diagnóstico:" />
+				<p:inputText value="#{consultaBean.consulta.diagnostico}"/>
+
+			</p:panelGrid>
+			<p:commandButton type="submit" value="Salvar"
+				action="#{consultaBean.editarConsulta()}" update="form"
+				onclick="PF('editar').hide()"
+				styleClass="ui-button-outlined ui-button-success" />
+			<p:commandButton class="botaoMedico" value="Cancelar" onclick="PF('novoIMC').hide()" styleClass="ui-button-outlined ui-button-success" />
+		</h:form>
+	</p:dialog>
+
+
+
+
+
+</h:body>
+</html>

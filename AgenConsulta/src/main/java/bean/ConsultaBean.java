@@ -3,7 +3,6 @@ package bean;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,15 +10,18 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
-
-import org.hibernate.internal.build.AllowSysOut;
-
 import dao.AgendamentoDao;
 import dao.CadastroDao;
+import dao.ConsultaDao;
+import dao.IMCDao;
 import dao.MedicoDao;
+import dao.PacienteDao;
 import entidades.Agendamento;
 import entidades.Cadastro;
+import entidades.Consulta;
+import entidades.IMC;
 import entidades.Medico;
+import entidades.Paciente;
 
 @ManagedBean
 @ApplicationScoped
@@ -28,9 +30,14 @@ public class ConsultaBean {
 	private Cadastro cadastro = new Cadastro(); 
 	private Agendamento agendamento = new Agendamento();
 	private Medico medico = new Medico(); 
+	private Paciente paciente = new Paciente();
+	private IMC imc = new IMC();
+	private Consulta consulta = new Consulta();
 	private List<Medico> listaMedico;
 	private List<Agendamento> listaAgendamento;
-	
+	private List<Paciente> listaPaciente;
+	private List<IMC> listaIMC;
+	private List<Consulta> listaConsulta;
 
 	public Medico getMedico() {
 		return medico;
@@ -48,6 +55,30 @@ public class ConsultaBean {
 		return agendamento;
 	}
 
+	public Paciente getPaciente() {
+		return paciente;
+	}
+
+	public void setPaciente(Paciente paciente) {
+		this.paciente = paciente;
+	}
+
+	public IMC getIMC() {
+		return imc;
+	}
+
+	public void setIMC(IMC imc) {
+		this.imc = imc;
+	}
+
+	public Consulta getConsulta() {
+		return consulta;
+	}
+
+	public void setConsulta(Consulta consulta) {
+		this.consulta = consulta;
+	}
+	
 	public void setAgendamento(Agendamento agendamento) {
 		this.agendamento = agendamento;
 	}
@@ -202,7 +233,6 @@ public class ConsultaBean {
 	public List<Medico> listaMedico(){
 		MedicoDao mDao = new MedicoDao();
 		listaMedico = mDao.pesquisaTodos();
-		//System.out.println("REFLETIUUUUUUU");
 		return listaMedico;
 	}
 	
@@ -216,9 +246,6 @@ public class ConsultaBean {
 	
 	public String salvarAgendamento() {
 		
-		System.out.println(agendamento.getClinica());
-		System.out.println(agendamento.getDataHoraAgendamento());
-		System.out.println(agendamento.getIdMedico());
 		AgendamentoDao aDao = new AgendamentoDao();
 		Agendamento result = aDao.pesquisaAgendamento(agendamento.getClinica(), agendamento.getDataHoraAgendamento(), agendamento.getIdMedico());
 	
@@ -242,6 +269,7 @@ public class ConsultaBean {
 	public String salvarMedico() {
 		MedicoDao mDao = new MedicoDao();
 		mDao.salvar(medico);
+		medico = new Medico();
 		return null;
 	}
 	
@@ -303,6 +331,175 @@ public class ConsultaBean {
 		AgendamentoDao aDao = new AgendamentoDao();
 		a.setStatus("Cancelado");
 		aDao.editar(a);
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+//PACIENTES E IMC
+	
+	
+	
+	
+	
+	
+//Agendamento - Início
+
+	public List<Paciente> listaPaciente() {
+		PacienteDao aDao = new PacienteDao();		
+		listaPaciente = aDao.pesquisaTodos();
+		return listaPaciente;
+	}
+	
+	
+	public String salvarPaciente() {
+		PacienteDao pDao = new PacienteDao();
+		pDao.salvar(paciente);
+		paciente = new Paciente();
+		return null;
+	}
+	
+	public String excluirPaciente(Paciente p) {
+		PacienteDao pDao = new PacienteDao();
+		pDao.excluir(p);
+		paciente = new Paciente();
+		return null;
+	}
+	
+	public String editarPaciente() {
+		PacienteDao pDao = new PacienteDao();
+		pDao.editar(paciente);
+		paciente = new Paciente();
+		return null;
+	}
+
+//IMC
+	
+	public List<IMC> listaIMC() {
+		IMCDao iDao = new IMCDao();		
+		listaIMC = iDao.pesquisaTodos();
+		return listaIMC;
+	}
+	
+	public String salvarIMC(){
+		Double resultado = (imc.getPeso() / (imc.getAltura() * imc.getAltura()))*10000;
+		
+		String classificacao = classificacaoIMC(resultado);
+		
+		imc.setClassificacao(classificacao);
+		imc.setResultado(resultado);
+		imc.setPaciente(paciente);
+		
+		IMCDao imcDao = new IMCDao();
+		imcDao.salvar(imc);
+		imc = new IMC();
+		
+		return null;
+	}
+	
+	public String excluirIMC(IMC imc) {
+		IMCDao imcDao = new IMCDao();
+		imcDao.excluir(imc);
+		return null;
+	}
+	
+	public String editarIMC() {
+		IMCDao imcDao = new IMCDao();
+		
+		Double resultado = (imc.getPeso() / (imc.getAltura() * imc.getAltura()))*10000;
+		
+		System.out.println(resultado);
+
+		String classificacao = classificacaoIMC(resultado);
+		
+		imc.setResultado(resultado);
+		imc.setClassificacao(classificacao);
+		
+		imcDao.editar(imc);
+		imc = new IMC();
+		return null;
+	}
+	
+	private String classificacaoIMC(Double resultado) {
+		String classificacao = "";
+		
+		if(resultado < 17) {
+			classificacao = "Muito Abaixo do Peso";
+		}else if(resultado < 18.4){
+			classificacao = "Abaixo do Peso";
+		}else if(resultado < 24.9) {
+			classificacao = "Peso Normal";
+		}else if(resultado < 29.9) {
+			classificacao = "Acima do Peso";
+		}else if(resultado < 34.9) {
+			classificacao = "Obesidade Grau I";
+		}else if(resultado < 40) {
+			classificacao = "Obesidade Grau II";
+		}else {
+			classificacao = "Obesidade Grau III";
+		}
+		
+		return classificacao;
+	}
+
+	public String nomePaciente() {
+		String nomePaciente = "";
+		PacienteDao aDao = new PacienteDao();		
+		listaPaciente = aDao.pesquisaTodos();
+		
+		
+		return nomePaciente;
+	}
+	
+	
+	public List<Consulta> listaConsulta() {
+		ConsultaDao cDao = new ConsultaDao();
+		listaConsulta = cDao.pesquisaTodos();
+		return listaConsulta;
+	}
+	
+	
+	public String salvarConsulta() {
+		ConsultaDao cDao = new ConsultaDao();
+		
+		for (Paciente p : listaPaciente) {
+			if(paciente.getId().equals(p.getId())) {
+				consulta.setPaciente(p);
+			}
+		}
+		for (Medico m : listaMedico) {
+			if(medico.getId().equals(m.getId())) {
+				consulta.setMedico(m);	
+			}
+		}
+		cDao.salvar(consulta);
+		consulta = new Consulta();
+		paciente = new Paciente();
+		medico = new Medico();
+		return null;
+	}
+	
+	public String excluirConsulta(Consulta c) {
+		ConsultaDao cDao = new ConsultaDao();
+		cDao.excluir(c);
+		return null;
+	}
+	
+	public String editarConsulta() {
+		ConsultaDao cDao = new ConsultaDao();
+		cDao.editar(consulta);
+		consulta = new Consulta();
+		return null;
+	}
+	
+	
+	public String cancelarConsulta() {
+		consulta = new Consulta();
+		paciente = new Paciente();
+		medico = new Medico();
 		return null;
 	}
 	
